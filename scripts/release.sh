@@ -1,6 +1,6 @@
 #!/bin/bash
 # Builds, signs (Developer ID), notarizes and staples a release DMG, then commits it to dist/.
-# Pushing that commit to main makes .github/workflows/release.yml publish it as a GitHub release.
+# Pushing that commit to master makes .github/workflows/release.yml publish it as a GitHub release.
 #
 # Usage: scripts/release.sh <version>       e.g. scripts/release.sh 1.0.0
 #
@@ -27,7 +27,7 @@ cd "${ROOT}"
 step "Preflight"
 [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail "usage: scripts/release.sh <major.minor.patch>"
 [ -z "$(git status --porcelain)" ] || fail "working tree is not clean"
-[ "$(git branch --show-current)" = "main" ] || fail "releases are cut from main"
+[ "$(git branch --show-current)" = "master" ] || fail "releases are cut from master"
 CURRENT="0.0.0"
 [ -f "${DIST}/VERSION" ] && CURRENT="$(tr -d '[:space:]' < "${DIST}/VERSION")"
 if [ "${CURRENT}" = "${VERSION}" ] || [ "$(printf '%s\n%s\n' "${CURRENT}" "${VERSION}" | sort -V | tail -1)" != "${VERSION}" ]; then
@@ -120,4 +120,4 @@ echo "${VERSION}" > "${DIST}/VERSION"
 
 git add "${DIST}"
 git commit --quiet -m "release: v${VERSION}"
-step "Committed release v${VERSION}. Push main to publish it: git push origin main"
+step "Committed release v${VERSION}. Push master to publish it: git push origin master"
