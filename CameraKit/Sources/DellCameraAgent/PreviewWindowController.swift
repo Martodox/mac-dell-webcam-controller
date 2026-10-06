@@ -2,21 +2,21 @@
 import AppKit
 import SwiftUI
 
-/// Floating window with a live, mirrored preview of the WB7022.
+/// Standard window with a live, mirrored preview of the WB7022.
 final class PreviewWindowController: NSWindowController, NSWindowDelegate {
     private let model = PreviewModel()
     private let onClose: () -> Void
 
     init(onClose: @escaping () -> Void) {
         self.onClose = onClose
-        let window = NSPanel(
+        let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 640, height: 360),
-            styleMask: [.titled, .closable, .resizable, .fullSizeContentView, .utilityWindow],
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
         window.title = "Dell Webcam WB7022"
         window.titlebarAppearsTransparent = true
-        window.isFloatingPanel = true
-        window.hidesOnDeactivate = false
+        window.isReleasedWhenClosed = false
+        window.collectionBehavior.insert(.fullScreenPrimary)
         window.isMovableByWindowBackground = true
         window.contentAspectRatio = NSSize(width: 16, height: 9)
         window.minSize = NSSize(width: 320, height: 180)
