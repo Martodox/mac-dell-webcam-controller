@@ -2,7 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIconFile</key>
+	<string>DellCamera</string>
+	<key>NSPrefPaneIconFile</key>
+	<string>DellCamera.icns</string>
 	<key>NSPrefPaneIconLabel</key>
-	<string>Dell Camera Configurator</string>
+	<string>Dell camera</string>
 </dict>
 </plist>

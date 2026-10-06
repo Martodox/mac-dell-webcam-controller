@@ -8,6 +8,8 @@
 	<string>Dell Camera Agent</string>
 	<key>CFBundleExecutable</key>
 	<string>DellCameraAgent</string>
+	<key>CFBundleIconFile</key>
+	<string>DellCamera</string>
 	<key>CFBundleIdentifier</key>
 	<string>club.freediver.dell-camera-agent</string>
 	<key>CFBundleInfoDictionaryVersion</key>
