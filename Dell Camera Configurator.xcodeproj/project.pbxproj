@@ -153,23 +153,32 @@
 				"# Build Dell Camera Agent from the CameraKit package and embed it in Contents/Resources.",
 				"PKG=\"${SRCROOT}/CameraKit\"",
 				"SCRATCH=\"${DERIVED_FILE_DIR}/agent-build\"",
+				"if [ \"${CONFIGURATION}\" = \"Release\" ]; then",
+				"  # Universal like the pane; timestamped signatures are required for notarization.",
+				"  ARCH_FLAGS=\"--arch arm64 --arch x86_64\"",
+				"  TIMESTAMP=\"--timestamp\"",
+				"else",
+				"  ARCH_FLAGS=\"\"",
+				"  TIMESTAMP=\"\"",
+				"fi",
 				"swiftpm() {",
 				"  env -i HOME=\"${HOME}\" PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\" DEVELOPER_DIR=\"${DEVELOPER_DIR}\" \\",
-				"    xcrun swift build -c release --package-path \"${PKG}\" --scratch-path \"${SCRATCH}\" --product DellCameraAgent \"$@\"",
+				"    xcrun swift build -c release --package-path \"${PKG}\" --scratch-path \"${SCRATCH}\" --product DellCameraAgent ${ARCH_FLAGS} \"$@\"",
 				"}",
 				"swiftpm",
 				"BIN=\"$(swiftpm --show-bin-path)/DellCameraAgent\"",
 				"RESOURCES=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"",
 				"APP=\"${RESOURCES}/Dell Camera Agent.app\"",
 				"rm -rf \"${APP}\" \"${RESOURCES}/dell-camera-helper\"",
-				"mkdir -p \"${APP}/Contents/MacOS\"",
+				"mkdir -p \"${APP}/Contents/MacOS\" \"${APP}/Contents/Resources\"",
 				"cp -f \"${BIN}\" \"${APP}/Contents/MacOS/DellCameraAgent\"",
 				"cp -f \"${PKG}/Support/AgentInfo.plist\" \"${APP}/Contents/Info.plist\"",
-				"mkdir -p \"${APP}/Contents/Resources\"",
+				"/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MARKETING_VERSION}\" \\",
+				"  -c \"Set :CFBundleVersion ${CURRENT_PROJECT_VERSION}\" \"${APP}/Contents/Info.plist\"",
 				"cp -f \"${SRCROOT}/Dell Camera Configurator/DellCamera.icns\" \"${APP}/Contents/Resources/DellCamera.icns\"",
 				"printf 'APPL????' > \"${APP}/Contents/PkgInfo\"",
 				"if [ -n \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ] && [ \"${EXPANDED_CODE_SIGN_IDENTITY}\" != \"-\" ]; then",
-				"  codesign --force --options runtime --entitlements \"${PKG}/Support/Agent.entitlements\" \\",
+				"  codesign --force --options runtime ${TIMESTAMP} --entitlements \"${PKG}/Support/Agent.entitlements\" \\",
 				"    --sign \"${EXPANDED_CODE_SIGN_IDENTITY}\" \"${APP}\"",
 				"else",
 				"  codesign --force --entitlements \"${PKG}/Support/Agent.entitlements\" --sign - \"${APP}\"",
@@ -195,6 +204,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RM9V8M9NAZ;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dell Camera Configurator/Info.plist";
@@ -218,6 +228,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RM9V8M9NAZ;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dell Camera Configurator/Info.plist";
@@ -288,7 +299,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -344,7 +355,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
