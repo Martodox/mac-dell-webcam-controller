@@ -1,0 +1,386 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E1442E030756C70006A6553 /* CameraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4E1442E130756C70006A6553 /* CameraKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4E1442CD30756C70006A6553 /* Dell Camera Configurator.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dell Camera Configurator.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4E1442DA30756C70006A6553 /* Exceptions for "Dell Camera Configurator" folder in "Dell Camera Configurator" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4E1442CC30756C70006A6553 /* Dell Camera Configurator */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4E1442CF30756C70006A6553 /* Dell Camera Configurator */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4E1442DA30756C70006A6553 /* Exceptions for "Dell Camera Configurator" folder in "Dell Camera Configurator" target */,
+			);
+			path = "Dell Camera Configurator";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4E1442CA30756C70006A6553 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				4E1442E030756C70006A6553 /* CameraKit in Frameworks */,
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4E1442C330756C70006A6553 = {
+			isa = PBXGroup;
+			children = (
+				4E1442CF30756C70006A6553 /* Dell Camera Configurator */,
+				4E1442CE30756C70006A6553 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4E1442CE30756C70006A6553 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4E1442CD30756C70006A6553 /* Dell Camera Configurator.prefPane */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4E1442C830756C70006A6553 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			files = (
+			);
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4E1442CC30756C70006A6553 /* Dell Camera Configurator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E1442DB30756C70006A6553 /* Build configuration list for PBXNativeTarget "Dell Camera Configurator" */;
+			buildPhases = (
+				4E1442C830756C70006A6553 /* Headers */,
+				4E1442C930756C70006A6553 /* Sources */,
+				4E1442CA30756C70006A6553 /* Frameworks */,
+				4E1442CB30756C70006A6553 /* Resources */,
+				4E1442E330756C70006A6553 /* Embed Camera Agent */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				4E1442CF30756C70006A6553 /* Dell Camera Configurator */,
+			);
+			name = "Dell Camera Configurator";
+			packageProductDependencies = (
+				4E1442E130756C70006A6553 /* CameraKit */,
+			);
+			productName = "Dell Camera Configurator";
+			productReference = 4E1442CD30756C70006A6553 /* Dell Camera Configurator.prefPane */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4E1442C430756C70006A6553 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					4E1442CC30756C70006A6553 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+				};
+			};
+			buildConfigurationList = 4E1442C730756C70006A6553 /* Build configuration list for PBXProject "Dell Camera Configurator" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4E1442C330756C70006A6553;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4E1442E230756C70006A6553 /* XCLocalSwiftPackageReference "CameraKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4E1442CE30756C70006A6553 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4E1442CC30756C70006A6553 /* Dell Camera Configurator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4E1442CB30756C70006A6553 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4E1442E330756C70006A6553 /* Embed Camera Agent */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			name = "Embed Camera Agent";
+			shellPath = /bin/sh;
+			shellScript = (
+				"set -euo pipefail",
+				"# Build Dell Camera Agent from the CameraKit package and embed it in Contents/Resources.",
+				"PKG=\"${SRCROOT}/CameraKit\"",
+				"SCRATCH=\"${DERIVED_FILE_DIR}/agent-build\"",
+				"swiftpm() {",
+				"  env -i HOME=\"${HOME}\" PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\" DEVELOPER_DIR=\"${DEVELOPER_DIR}\" \\",
+				"    xcrun swift build -c release --package-path \"${PKG}\" --scratch-path \"${SCRATCH}\" --product DellCameraAgent \"$@\"",
+				"}",
+				"swiftpm",
+				"BIN=\"$(swiftpm --show-bin-path)/DellCameraAgent\"",
+				"RESOURCES=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"",
+				"APP=\"${RESOURCES}/Dell Camera Agent.app\"",
+				"rm -rf \"${APP}\" \"${RESOURCES}/dell-camera-helper\"",
+				"mkdir -p \"${APP}/Contents/MacOS\"",
+				"cp -f \"${BIN}\" \"${APP}/Contents/MacOS/DellCameraAgent\"",
+				"cp -f \"${PKG}/Support/AgentInfo.plist\" \"${APP}/Contents/Info.plist\"",
+				"printf 'APPL????' > \"${APP}/Contents/PkgInfo\"",
+				"if [ -n \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ] && [ \"${EXPANDED_CODE_SIGN_IDENTITY}\" != \"-\" ]; then",
+				"  codesign --force --options runtime --entitlements \"${PKG}/Support/Agent.entitlements\" \\",
+				"    --sign \"${EXPANDED_CODE_SIGN_IDENTITY}\" \"${APP}\"",
+				"else",
+				"  codesign --force --entitlements \"${PKG}/Support/Agent.entitlements\" --sign - \"${APP}\"",
+				"fi",
+				"",
+			);
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4E1442C930756C70006A6553 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4E1442DC30756C70006A6553 /* Debug configuration for PBXNativeTarget "Dell Camera Configurator" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM9V8M9NAZ;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Dell Camera Configurator/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = Dell_Camera_Configurator;
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "freediver.club.Dell-Camera-Configurator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Debug;
+		};
+		4E1442DD30756C70006A6553 /* Release configuration for PBXNativeTarget "Dell Camera Configurator" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM9V8M9NAZ;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Dell Camera Configurator/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = Dell_Camera_Configurator;
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "freediver.club.Dell-Camera-Configurator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Release;
+		};
+		4E1442DE30756C70006A6553 /* Debug configuration for PBXProject "Dell Camera Configurator" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = RM9V8M9NAZ;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4E1442DF30756C70006A6553 /* Release configuration for PBXProject "Dell Camera Configurator" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RM9V8M9NAZ;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E1442C730756C70006A6553 /* Build configuration list for PBXProject "Dell Camera Configurator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E1442DE30756C70006A6553 /* Debug configuration for PBXProject "Dell Camera Configurator" */,
+				4E1442DF30756C70006A6553 /* Release configuration for PBXProject "Dell Camera Configurator" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		4E1442DB30756C70006A6553 /* Build configuration list for PBXNativeTarget "Dell Camera Configurator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E1442DC30756C70006A6553 /* Debug configuration for PBXNativeTarget "Dell Camera Configurator" */,
+				4E1442DD30756C70006A6553 /* Release configuration for PBXNativeTarget "Dell Camera Configurator" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		4E1442E230756C70006A6553 /* XCLocalSwiftPackageReference "CameraKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = CameraKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4E1442E130756C70006A6553 /* CameraKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CameraKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 4E1442C430756C70006A6553 /* Project object */;
+	validationLevel = 1;
+}
