@@ -28,11 +28,13 @@ step "Preflight"
 [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail "usage: scripts/release.sh <major.minor.patch>"
 [ -z "$(git status --porcelain)" ] || fail "working tree is not clean"
 [ "$(git branch --show-current)" = "main" ] || fail "releases are cut from main"
-CURRENT="$(tr -d '[:space:]' < "${DIST}/VERSION" 2>/dev/null || echo 0.0.0)"
+CURRENT="0.0.0"
+[ -f "${DIST}/VERSION" ] && CURRENT="$(tr -d '[:space:]' < "${DIST}/VERSION")"
 if [ "${CURRENT}" = "${VERSION}" ] || [ "$(printf '%s\n%s\n' "${CURRENT}" "${VERSION}" | sort -V | tail -1)" != "${VERSION}" ]; then
   fail "version ${VERSION} must be greater than the last release ${CURRENT}"
 fi
-security find-identity -v -p codesigning | grep -qF "${SIGN_ID}" || fail "signing identity not found: ${SIGN_ID}"
+identities="$(security find-identity -v -p codesigning)"
+grep -qF "${SIGN_ID}" <<< "${identities}" || fail "signing identity not found: ${SIGN_ID}"
 xcrun notarytool history --keychain-profile "${NOTARY_PROFILE}" >/dev/null \
   || fail "notarytool profile '${NOTARY_PROFILE}' is missing or invalid"
 BUILD_NUMBER="$(git rev-list --count HEAD)"
@@ -60,8 +62,10 @@ AGENT="${PANE}/Contents/Resources/Dell Camera Agent.app"
 step "Verify signatures"
 codesign --verify --deep --strict --verbose=2 "${PANE}"
 for bundle in "${PANE}" "${AGENT}"; do
-  codesign -dvv "${bundle}" 2>&1 | grep -qF "Authority=${SIGN_ID}" || fail "${bundle##*/} is not signed by ${SIGN_ID}"
-  codesign -dvv "${bundle}" 2>&1 | grep -q "Timestamp=" || fail "${bundle##*/} has no secure timestamp"
+  # Capture first: piping into grep -q would SIGPIPE codesign and trip pipefail.
+  info="$(codesign -dvv "${bundle}" 2>&1)"
+  grep -qF "Authority=${SIGN_ID}" <<< "${info}" || fail "${bundle##*/} is not signed by ${SIGN_ID}"
+  grep -q "^Timestamp=" <<< "${info}" || fail "${bundle##*/} has no secure timestamp"
 done
 for binary in "${PANE}/Contents/MacOS/Dell camera" "${AGENT}/Contents/MacOS/DellCameraAgent"; do
   archs="$(lipo -archs "${binary}")"
