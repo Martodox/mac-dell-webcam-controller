@@ -1,0 +1,61 @@
+# Publishes the notarized DMG committed to dist/ as a GitHub release.
+# Signing and notarization happen locally (scripts/release.sh); this workflow only
+# checks the committed artifact and uploads it when it changes.
+name: Publish release
+
+on:
+  push:
+    branches: [main]
+    paths: ["dist/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check committed artifact
+        id: artifact
+        run: |
+          version="$(tr -d '[:space:]' < dist/VERSION)"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::dist/VERSION is not a version: '$version'"
+            exit 1
+          fi
+          (cd dist && sha256sum --check Dell-camera.dmg.sha256)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.artifact.outputs.version }}
+        run: |
+          tag="v$VERSION"
+          asset="Dell-camera-$VERSION.dmg"
+          committed="$(cut -d' ' -f1 dist/Dell-camera.dmg.sha256)"
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release download "$tag" --pattern "$asset.sha256" --dir "$RUNNER_TEMP/published"
+            if [ "$(cut -d' ' -f1 "$RUNNER_TEMP/published/$asset.sha256")" = "$committed" ]; then
+              echo "$tag is already published with this artifact."
+              exit 0
+            fi
+            echo "::error::dist/Dell-camera.dmg changed but $tag is already released. Bump dist/VERSION with scripts/release.sh."
+            exit 1
+          fi
+
+          mkdir -p "$RUNNER_TEMP/upload"
+          cp dist/Dell-camera.dmg "$RUNNER_TEMP/upload/$asset"
+          (cd "$RUNNER_TEMP/upload" && sha256sum "$asset" > "$asset.sha256")
+          gh release create "$tag" "$RUNNER_TEMP/upload/$asset" "$RUNNER_TEMP/upload/$asset.sha256" \
+            --target "$GITHUB_SHA" \
+            --title "Dell camera $VERSION" \
+            --notes-file dist/RELEASE_NOTES.md
