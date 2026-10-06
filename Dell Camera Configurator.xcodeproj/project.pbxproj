@@ -144,6 +144,9 @@
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			name = "Embed Camera Agent";
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Dell Camera Agent.app",
+			);
 			shellPath = /bin/sh;
 			shellScript = (
 				"set -euo pipefail",
